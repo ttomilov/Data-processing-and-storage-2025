@@ -2,7 +2,8 @@ package org.spider;
 
 import java.util.*;
 import java.util.concurrent.*;
-import org.vthreads.VThreads;
+
+import static java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor;
 
 public class Spider {
 
@@ -23,7 +24,7 @@ public class Spider {
     }
 
     public void start() {
-        try (ExecutorService executor = VThreads.newVirtualThreadExecutor()) {
+        try (ExecutorService executor = newVirtualThreadPerTaskExecutor()) {
             crawl(executor, "");
             phaser.arriveAndAwaitAdvance();
         } catch (Exception e) {
