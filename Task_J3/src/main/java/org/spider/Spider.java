@@ -9,7 +9,7 @@ public class Spider {
 
     private final String Url;
     private final Set<String> visited = ConcurrentHashMap.newKeySet();
-    private final List<String> messages = new CopyOnWriteArrayList<>();
+    private final List<String> messages = new ArrayList<>();
     private final Phaser phaser = new Phaser(1);
     private final Object logLock = new Object();
 
@@ -44,9 +44,7 @@ public class Spider {
         phaser.register();
         executor.submit(() -> {
             try {
-                String url = Url.endsWith("/")
-                        ? Url + (path.startsWith("/") ? path.substring(1) : path)
-                        : Url + (path.startsWith("/") ? path : "/" + path);
+                String url = Url + path;
 
                 log("Fetching: " + url);
 
