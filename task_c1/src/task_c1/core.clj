@@ -1,7 +1,7 @@
 (ns task-c1.core
   (:gen-class))
 
-(defn strings-without-adjacent [alphabet n]
+(defn builder [alphabet n]
   (if (= n 0)
     [""]
     (reduce
@@ -18,6 +18,6 @@
 
 (defn -main []
   (println "Test 1:")
-  (println (strings-without-adjacent ["a" "b" "c"] 2))
+  (println (builder ["a" "b" "c"] 2))
   (println "\nTest 2:")
-  (println (strings-without-adjacent ["a" "b"] 3)))
+  (println (builder ["a" "b"] 3)))
