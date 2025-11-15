@@ -15,10 +15,6 @@ public class Node {
         return data;
     }
 
-    public void setData(char data) {
-        this.data = data;
-    }
-
     public Node getNext() {
         return next;
     }

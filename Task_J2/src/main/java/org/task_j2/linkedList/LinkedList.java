@@ -2,7 +2,9 @@ package org.task_j2.linkedList;
 
 import org.task_j2.node.Node;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class LinkedList implements Iterable<Character> {
@@ -12,6 +14,7 @@ public class LinkedList implements Iterable<Character> {
     public LinkedList() {
         this.head = null;
     }
+
     public synchronized void addFirst(char data) {
         Node newNode = new Node(data, null, this.head);
         if (this.head != null) {
@@ -38,23 +41,16 @@ public class LinkedList implements Iterable<Character> {
 
     @Override
     public Iterator<Character> iterator() {
-        return new Iterator<>() {
-            private Node current = getHead();
+        List<Character> snapshot = new ArrayList<>();
 
-            @Override
-            public boolean hasNext() {
-                return current != null;
-            }
-
-            @Override
-            public Character next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                Character data = current.getData();
+        synchronized (this) {
+            Node current = head;
+            while (current != null) {
+                snapshot.add(current.getData());
                 current = current.getNext();
-                return data;
             }
-        };
+        }
+
+        return snapshot.iterator();
     }
 }
